@@ -4,7 +4,9 @@ import 'package:wisata_candi/data/candi_data.dart';
 import 'package:wisata_candi/models/candi.dart';
 
 class DetailScreen extends StatelessWidget {
-  const DetailScreen({super.key, required Candi candi});
+  final dynamic candi;
+
+  const DetailScreen({super.key,required this.candi});
 
   @override
   Widget build(BuildContext context) {
