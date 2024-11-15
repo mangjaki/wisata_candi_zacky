@@ -16,19 +16,21 @@ import 'package:wisata_candi/widgets/item_card.dart';
    Widget build(BuildContext context) {
      return Scaffold(
        // TODO: 1 BUAT appbar dengan judul wisata candi
-       appBar: AppBar(title: Text('Wisata Candi'),),
+       appBar: AppBar(
+         title: const Text('Wisata Candi'),
+       ),
        // TODO: 2 BUAT body dengan GridView.builder
        body: GridView.builder(
-         padding: EdgeInsets.all(8),
-         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-           crossAxisCount: 2),
+         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+           crossAxisCount: 2
+         ),
+         padding: const EdgeInsets.all(8),
          itemCount: candiList.length,
-         itemBuilder: (context,index){
+         itemBuilder: (_,index){
            // TODO: 3 BUAT Itemcard sebagai return value dari GridView.builder
            Candi candi = candiList[index];
            return ItemCard(candi: candi);
          },
-       ),
-     );
+       ));
    }
  }
