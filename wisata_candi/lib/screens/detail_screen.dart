@@ -38,7 +38,9 @@ class DetailScreen extends StatelessWidget {
                     shape: BoxShape.circle,
                   ),
                   child: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
                     icon: const Icon(
                       Icons.arrow_back,
                     ),
@@ -53,14 +55,14 @@ class DetailScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 16,),
+                const SizedBox(height: 16,),
                 // Info Atas (nama candi dan tombol favorit)
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       candi.name,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
@@ -71,34 +73,34 @@ class DetailScreen extends StatelessWidget {
                   ],
                 ),
                 // Info tengah (lokasi, dibangun tipe)
-                SizedBox(height: 16,),
+                const SizedBox(height: 16,),
                 Row(children: [
-                  Icon(Icons.place, color: Colors.red,),
-                  SizedBox(width: 8,),
-                  SizedBox(width: 70,
+                  const Icon(Icons.place, color: Colors.red,),
+                  const SizedBox(width: 8,),
+                  const SizedBox(width: 70,
                     child: Text('Lokasi', style: TextStyle(
                       fontWeight: FontWeight.bold),),),
                   Text(': ${candi.location}',),
                 ],),
                 Row(children: [
-                  Icon(Icons.calendar_month, color: Colors.blue,),
-                  SizedBox(width: 8,),
-                  SizedBox(width: 70,
+                  const Icon(Icons.calendar_month, color: Colors.blue,),
+                  const SizedBox(width: 8,),
+                  const SizedBox(width: 70,
                     child: Text('Dibangun', style: TextStyle(
                         fontWeight: FontWeight.bold),),),
                   Text(': ${candi.built}'),
                 ],),
                 Row(children: [
-                  Icon(Icons.house, color: Colors.green,),
-                  SizedBox(width: 8,),
-                  SizedBox(width: 70,
+                  const Icon(Icons.house, color: Colors.green,),
+                  const SizedBox(width: 8,),
+                  const SizedBox(width: 70,
                     child: Text('Tipe', style: TextStyle(
                         fontWeight: FontWeight.bold),),),
                   Text(': ${candi.type}'),
                 ],),
-                SizedBox(height: 16,),
+                const SizedBox(height: 16,),
                 Divider(color: Colors.deepPurple.shade100,),
-                SizedBox(height: 16,),
+                const SizedBox(height: 16,),
                 // Info bawah (deskripsi)
               ],
             ),
@@ -110,10 +112,10 @@ class DetailScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Divider(color: Colors.deepPurple.shade100,),
-                  Text('Galeri', style: TextStyle(
+                  const Text('Galeri', style: TextStyle(
                     fontSize: 16, fontWeight: FontWeight.bold,
                   ),),
-                  SizedBox(height: 10,),
+                  const SizedBox(height: 10,),
                   SizedBox(
                     height: 100,
                     child: ListView.builder(
@@ -121,14 +123,31 @@ class DetailScreen extends StatelessWidget {
                       itemCount: candi.imageUrls.length,
                       itemBuilder: (context, index){
                         return Padding(
-                            padding: EdgeInsets.only(left: 8),
+                          padding: const EdgeInsets.only(right: 8),
                           child: GestureDetector(
                             onTap: () {},
                             child: Container(
-                              decoration: BoxDecoration(),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12),
+                                border: Border.all(
+                                  color: Colors.deepPurple.shade100,
+                                  width: 2,
+                                )
+                              ),
                               child: ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
                                 child: CachedNetworkImage(
-                                  imageUrl: candi.imageUrl[index]),
+                                  imageUrl: candi.imageUrls[index],
+                                  width: 120,
+                                  height: 120,
+                                  fit: BoxFit.cover,
+                                  placeholder: (context,url)=> Container(
+                                    width: 123,
+                                    height: 120,
+                                    color: Colors.deepPurple[50],
+                                  ),
+                                  errorWidget: (context,url,error) => const Icon(Icons.error),
+                                ),
                               ),
                             ),
                           ),
@@ -136,8 +155,8 @@ class DetailScreen extends StatelessWidget {
                       },
                     ),
                   ),
-                  SizedBox(height: 4,),
-                  Text('Tap untuk Memperbesar', style: TextStyle(
+                  const SizedBox(height: 4,),
+                  const Text('Tap untuk Memperbesar', style: TextStyle(
                     fontSize: 12, color: Colors.black54,
                   ),),
                 ],
