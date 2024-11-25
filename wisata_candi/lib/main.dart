@@ -44,8 +44,13 @@ class MyApp extends StatelessWidget {
       //home: SignInScreen(),
       //home: SignUpScreen(),
       //home: SearchScreen(),
-
-      home: MainScreen(),
+      //home: MainScreen(),
+      initialRoute: '/',
+      routes: {
+        '/homescreen' : (context) => const HomeScreen(),
+        '/signin' : (context) => SignInScreen(),
+        '/signup' : (context) => SignUpScreen(),
+      },
     );
   }
 }

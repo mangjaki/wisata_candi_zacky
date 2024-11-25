@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignUpScreen extends StatefulWidget {
   SignUpScreen({super.key});
@@ -9,21 +10,58 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  final TextEditingController _namalengkapController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
 
   final TextEditingController _usernameController = TextEditingController();
 
   final TextEditingController _passwordController = TextEditingController();
 
+
+
   String _errorText = '';
 
-  bool _isSignedUp = false;
+  //bool _isSignedUp = false;
 
   bool _obscurePassword = true;
+  // TODO: 1. Membuat fungsi _signUp
+  void _signup() async{
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String name = _nameController.text.trim();
+    final String username = _usernameController.text.trim();
+    final String password = _passwordController.text.trim();
+
+    if (password.length < 8 ||
+        !password.contains(RegExp(r'[A-Z]')) ||
+        !password.contains(RegExp(r'[a-z]')) ||
+        !password.contains(RegExp(r'[0-9]')) ||
+        !password.contains(RegExp(r'[!@#%^&*()-_=+{}]'))) {
+      setState(() {
+        _errorText = 'Minimal 8 karakter, kombinasi [A-Z], [a-z],[0-9],[!@#%^&*()-_=+{}]';
+      });
+      return;
+    }
+
+    //simpan data pengguna di SgaredPreferences
+    prefs.setString('fullname', name);
+    prefs.setString('username', username);
+    prefs.setString('password', password);
+
+    //buat navigasi ke signScreen
+    Navigator.pushReplacementNamed(context, '/signin');
+  }
+  // TODO: 2. Membuat Fungsi dispose
+  @override
+  void dispose() {
+    //TODO: IMPLEMENTASI DISPOSE
+    _nameController.dispose();
+    _usernameController.dispose();
+    _passwordController.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Sign Up"),),
+      appBar: AppBar(title: const Text("Sign Up"),),
       body: Center(
         child: SingleChildScrollView(
           child: Padding(
@@ -34,8 +72,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   RichText(
-                      text: TextSpan(
-                          text: 'FORM REGISTER',
+                      text: const TextSpan(
+                          text: 'FORM SIGNUP',
                         style: TextStyle(
                           color: Colors.deepPurple,
                           fontSize: 30
@@ -44,8 +82,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   SizedBox(height: 16),
                   TextFormField(
-                    controller: _namalengkapController,
-                    decoration: InputDecoration(
+                    controller: _nameController,
+                    decoration: const InputDecoration(
                       labelText: "Nama Lengkap",
                       border: OutlineInputBorder(),
                     ),
@@ -53,7 +91,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   SizedBox(height: 16),
                   TextFormField(
                     controller: _usernameController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: "Nama Pengguna",
                       border: OutlineInputBorder(),
                     ),
@@ -64,7 +102,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     decoration: InputDecoration(
                       labelText: "Kata Sandi",
                       errorText: _errorText.isNotEmpty ? _errorText : null,
-                      border: OutlineInputBorder(),
+                      border: const OutlineInputBorder(),
                       suffixIcon: IconButton(
                         onPressed: (){
                           setState(() {
@@ -80,17 +118,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   SizedBox(height: 20),
                   ElevatedButton(
-                      onPressed: (){},
+                      onPressed: (){
+                        _signup();
+                      },
                       child: Text('Sign Up')),
                   SizedBox(height: 10),
                   RichText(
                       text: TextSpan(
                         text: 'Sudah mempunyai Akun?',
-                        style: TextStyle(fontSize: 16,color: Colors.deepPurple),
+                        style: const TextStyle(fontSize: 16,color: Colors.deepPurple),
                         children: <TextSpan>[
                           TextSpan(
                             text: 'Login disini!',
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.blue,
                               decoration: TextDecoration.underline,
                               fontSize: 16
