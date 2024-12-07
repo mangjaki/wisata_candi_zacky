@@ -12,7 +12,14 @@ import 'screens/search_screen.dart';
 
 
 void main() {
-  runApp(const MyApp());
+  runApp(MaterialApp(
+      initialRoute: '/',
+      routes:{
+        '/':(context) => HomeScreen(),
+        '/SignInScreen' : (context) => SignInScreen(),
+        '/SignUpScreen' : (context) => SignUpScreen(),
+      }
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -22,35 +29,29 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Wisata Candi',
-      theme: ThemeData(
-        appBarTheme: const AppBarTheme(
-          iconTheme: IconThemeData(color: Colors.deepPurple),
-          titleTextStyle: TextStyle(
-            color: Colors.black,
-            fontSize: 20,
-            fontWeight:  FontWeight.bold,
+        title: 'Wisata Candi',
+        theme: ThemeData(
+          appBarTheme: const AppBarTheme(
+            iconTheme: IconThemeData(color: Colors.deepPurple),
+            titleTextStyle: TextStyle(
+              color: Colors.deepPurple,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
           ),
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple).copyWith(
+            primary: Colors.deepPurple,
+            surface: Colors.deepPurple[50],
+          ),
+          useMaterial3: true,
         ),
-        colorScheme:
-        ColorScheme.fromSeed(seedColor: Colors.deepPurple).copyWith(
-          primary: Colors.deepPurple,
-          surface: Colors.deepPurple[50],
-        ),
-        useMaterial3: true,
-      ),
-      //home: ProfileScreen(),
-      //home: DetailScreen(candi: candiList[0]),
-      //home: SignInScreen(),
-      //home: SignUpScreen(),
-      //home: SearchScreen(),
-      //home: MainScreen(),
-      initialRoute: '/',
-      routes: {
-        '/homescreen' : (context) => const HomeScreen(),
-        '/signin' : (context) => SignInScreen(),
-        '/signup' : (context) => SignUpScreen(),
-      },
+        home: MainScreen(),
+        initialRoute: '/',
+        routes:{
+          '/':(context) => const HomeScreen(),
+          '/SignInScreen' : (context) => SignInScreen(),
+          '/SignUpScreen' : (context) => SignUpScreen(),
+        }
     );
   }
 }
@@ -91,7 +92,7 @@ class _MainScreenState extends State<MainScreen> {
               _currentIndex = index;
             });
           },
-          items: [
+          items: const [
             BottomNavigationBarItem(
               icon: Icon(Icons.home, color: Colors.deepPurple,),
               label: 'Home',
